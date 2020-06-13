@@ -29,6 +29,25 @@
 			class="com.iut.as.controller.LoginController">
 			<result name="success">JSP/retourAccueil.jsp</result>
 		</action>
+		
+		<action name="caseCrediterCompte"
+			class="com.iut.as.controller.LoginController" method ="caseCrediterCompte">
+			<result name="success">JSP/LoginController.jsp</result>
+		</action>
+		
+		<action name="crediterCompte" class="com.iut.as.controller.LoginController" method ="crediterCompte">
+		<result name="success">JSP/FinTransaction.jsp</result>
+		</action>
+		
+		<action name="caseDebiterCompte"
+			class="com.iut.as.controller.LoginController" method ="caseDebiterCompte">
+			<result name="success">JSP/LoginController.jsp</result>
+		</action>
+		
+		<action name="debiterCompte" class="com.iut.as.controller.LoginController" method ="debiterCompte">
+		<result name="success">JSP/FinTransaction.jsp</result>
+		</action>
+		
 
 		<!-- Pattern -->
 		<!-- Action générique ou dynamique -->

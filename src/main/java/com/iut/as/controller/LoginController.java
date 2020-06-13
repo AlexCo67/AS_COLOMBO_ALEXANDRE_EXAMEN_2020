@@ -37,6 +37,37 @@ public class LoginController extends ActionSupport {
 	// Le client connecté :
 	private Client clientConnecte;
 	private List<Compte> comptesClient;
+	
+	//Le compte sélectionné
+	private String numeroCompte;
+
+	public String getNumeroCompte() {
+		return numeroCompte;
+	}
+	
+	//Les différents montants
+	private String montantCredit;
+	public String getMontantCredit() {
+		return montantCredit;
+	}
+
+	public void setMontantCredit(String montantCredit) {
+		this.montantCredit = montantCredit;
+	}
+
+	private String montantDebit;
+
+	public String getMontantDebit() {
+		return montantDebit;
+	}
+
+	public void setMontantDebit(String montantDebit) {
+		this.montantDebit = montantDebit;
+	}
+
+	public void setNumeroCompte(String numeroCompte) {
+		this.numeroCompte = numeroCompte;
+	}
 
 	public List<Compte> getComptesClient() {
 		return comptesClient;
@@ -44,6 +75,34 @@ public class LoginController extends ActionSupport {
 
 	public void setComptesClient(List<Compte> comptesClient) {
 		this.comptesClient = comptesClient;
+	}
+
+	
+	
+	
+	private boolean caseMontantCredit;
+	
+	public boolean isCaseMontantCredit() {
+		return caseMontantCredit;
+	}
+	
+private boolean caseMontantDebit;
+	
+	public boolean isCaseMontantDebit() {
+		return caseMontantDebit;
+	}
+	
+	
+	
+	private Double soldeCompte;
+	
+	
+	public Double getSolde() {
+		return soldeCompte;
+	}
+
+	public void setSolde(Double solde) {
+		this.soldeCompte = solde;
 	}
 
 	// On a récupéré la liste des comptes :
@@ -128,6 +187,54 @@ public class LoginController extends ActionSupport {
 		logger.info("Demande de la liste des comptes ... pour le client : " + this.numeroClient);
 		setComptesClient(manager.getComptesByClient(numeroClient));
 		listeComptesOk = true;
+		return ActionSupport.SUCCESS;
+	}
+	
+	public String caseCrediterCompte() {
+		logger.info("demande du montant à créditer" + this.numeroClient);
+		setNumeroCompte(numeroCompte);
+		caseMontantCredit = true;
+		return ActionSupport.SUCCESS;
+	}
+	
+	public String crediterCompte() {
+		logger.info("mise à jour du montant du compte");
+		Compte compte = manager.getCompteById(numeroCompte);
+		double montant=0;
+		try {
+			montant=Double.parseDouble(montantCredit);
+		}catch(Exception e) {
+			logger.info("Ce n'est pas un montant");
+		}
+		compte.crediter(montant);
+		manager.updateCompte(compte);
+		setSolde(compte.getSolde());
+		logger.info("test");
+		logger.info("nouveau solde : "+ this.soldeCompte);
+		return ActionSupport.SUCCESS;
+	}
+	
+	public String caseDebiterCompte() {
+		logger.info("demande du montant à débiter" + this.numeroClient);
+		setNumeroCompte(numeroCompte);
+		caseMontantDebit = true;
+		return ActionSupport.SUCCESS;
+	}
+	
+	public String debiterCompte() {
+		logger.info("mise à jour du montant du compte");
+		Compte compte = manager.getCompteById(numeroCompte);
+		double montant=0;
+		try {
+			montant=Double.parseDouble(montantDebit);
+		}catch(Exception e) {
+			logger.info("Ce n'est pas un montant");
+		}
+		compte.debiter(montant);
+		manager.updateCompte(compte);
+		setSolde(compte.getSolde());
+		logger.info("test");
+		logger.info("nouveau solde : "+ this.soldeCompte);
 		return ActionSupport.SUCCESS;
 	}
 }

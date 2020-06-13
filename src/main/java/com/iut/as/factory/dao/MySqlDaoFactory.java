@@ -19,4 +19,5 @@ public class MySqlDaoFactory extends DaoFactory {
 		// Le lien vers la table client :
 		return MySqlDaoClient.getMySqlInstance();
 	}
+	
 }

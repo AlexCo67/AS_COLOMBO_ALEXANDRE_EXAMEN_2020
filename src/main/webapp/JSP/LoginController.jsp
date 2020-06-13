@@ -16,10 +16,42 @@
 				<tr>
 					<td><s:text name="numCompte"></s:text></td>
 					<td><s:text name="solde"></s:text></td>
+					<td><s:form name="myFormCrediter" action="caseCrediterCompte" method="POST">
+						<s:hidden name="numeroCompte" value="%{numCompte}"/>
+						<s:submit name="CompteCred" value="Crediter le compte" />
+						</s:form></td>
+					<td><s:form name="myFormDebiter" action="caseDebiterCompte" method="POST">
+						<s:hidden name="numeroCompte" value="%{numCompte}"/>
+						<s:submit name="CompteDeb" value="Debiter le compte" />
+						</s:form></td>		
 				</tr>
 			</s:iterator>
 		</table>
 	</s:if>
+	
+	<s:elseif test="caseMontantDebit">
+	<br>Vous êtes sur le compte : 
+	<s:text name="numeroCompte"></s:text>
+	<br>Veuillez entrer le montant à débiter :
+	<br>
+	<s:form name="myFormMontantDebit" action="debiterCompte">
+	<s:textfield label="montant" name="montantDebit"></s:textfield>
+	<s:hidden name="numeroCompte" value="%{numeroCompte}"/>
+	<s:submit name="submit"/>
+	</s:form>
+	</s:elseif>
+	
+	<s:elseif test="caseMontantCredit">
+	<br>Vous êtes sur le compte : 
+	<s:text name="numeroCompte"></s:text>
+	<br>Veuillez entrer le montant à créditer :
+	<br>
+	<s:form name="myFormMontantCredit" action="crediterCompte">
+	<s:textfield label="montant" name="montantCredit"></s:textfield>
+	<s:hidden name="numeroCompte" value="%{numeroCompte}"/>
+	<s:submit name="submit"/>
+	</s:form>
+	</s:elseif>
 	<s:else>
 	BIENVENUE DANS LA BANQUE
 	<br>

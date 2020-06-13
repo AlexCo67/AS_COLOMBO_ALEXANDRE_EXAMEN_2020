@@ -75,4 +75,19 @@ public class BankManager {
 			logger.info("le client possède : " + client.getComptes().size() + " compte(s)");
 		}
 	}
+	
+	public Compte getCompteById(String ID) {
+		List<Compte> comptes = dao.getDaoCompte().getComptes();
+		for(Compte compte : comptes) {
+			System.out.println(compte.getNumCompte());
+			System.out.println(ID);
+			if (ID.equals(compte.getNumCompte())) {
+				return compte;
+			}
+		}throw new BankBusinessException("UserIsAllowed()","-Compte Introuvable-");
+	}
+	
+	public boolean updateCompte(Compte compte) {
+		return dao.getDaoCompte().update(compte);
+	}
 }
